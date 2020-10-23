@@ -2,16 +2,18 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+process.env.NODE_ENV = 'development';
+
 const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
   mode: isProd ? 'production' : 'development',
-  devtool: isProd ? 'none' : 'inline-source-map',
+  devtool: !isProd && 'source-map',
   entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
-    filename: 'bundle.js',
+    filename: '[name].js',
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
@@ -21,6 +23,7 @@ module.exports = {
       {
         test: /\.tsx?$/,
         exclude: /node_modules/,
+        enforce: 'pre',
         use: [
           {
             loader: 'babel-loader',
@@ -38,6 +41,12 @@ module.exports = {
                 ],
                 '@babel/preset-react',
               ],
+            },
+          },
+          {
+            loader: require.resolve('eslint-loader'),
+            options: {
+              eslintPath: require.resolve('eslint'),
             },
           },
         ],
