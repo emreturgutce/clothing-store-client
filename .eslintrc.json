@@ -22,6 +22,8 @@
     "import/extensions": "off",
     "jsx-a11y/anchor-is-valid": "off",
     "react/jsx-curly-brace-presence": "off",
-    "react/jsx-one-expression-per-line": "off"
+    "react/jsx-one-expression-per-line": "off",
+    "implicit-arrow-linebreak": "off",
+    "function-paren-newline": "off"
   }
 }
