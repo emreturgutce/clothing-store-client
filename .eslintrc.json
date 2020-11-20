@@ -17,6 +17,11 @@
     "linebreak-style": "off",
     "no-unused-vars": "warn",
     "no-use-before-define": "off",
-    "react/jsx-filename-extension": "off"
+    "react/jsx-filename-extension": "off",
+    "import/no-unresolved": "off",
+    "import/extensions": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    "react/jsx-curly-brace-presence": "off",
+    "react/jsx-one-expression-per-line": "off"
   }
 }
