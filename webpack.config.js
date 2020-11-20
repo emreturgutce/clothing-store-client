@@ -91,7 +91,7 @@ module.exports = {
   watch: !isProd,
   devServer: {
     hot: true,
-    host: '0.0.0.0',
+    host: 'localhost',
     port: 3000,
     disableHostCheck: true,
     historyApiFallback: true,
