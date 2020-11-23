@@ -7,4 +7,5 @@ export enum AuthActionTypes {
   LOGIN_FAIL = 'LOGIN_FAIL',
   LOGOUT_SUCCESS = 'LOGOUT_SUCCESS',
   AUTH_FAIL = 'AUTH_FAIL',
+  AUTH_SUCCESS = 'AUTH?SUCCESS',
 }
