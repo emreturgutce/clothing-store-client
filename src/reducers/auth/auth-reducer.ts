@@ -30,6 +30,7 @@ export function authReducer(
         ...state,
         user: {
           id: action.payload?.id,
+          name: action.payload?.name,
         },
         isAuthenticated: true,
         isLoading: false,
