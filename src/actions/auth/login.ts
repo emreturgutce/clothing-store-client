@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import { gql } from '@apollo/client';
-import { AuthActionTypes } from '../types';
+import { AuthActionTypes } from '..';
 import { apolloClient } from '../../config/apollo-client';
 
 export const loginUser = (email: string, password: string) => (
@@ -37,8 +37,7 @@ export const loginUser = (email: string, password: string) => (
         });
       },
     )
-    .catch((err) => {
-      console.log(err);
+    .catch(() => {
       dispatch({
         type: AuthActionTypes.LOGIN_FAIL,
       });

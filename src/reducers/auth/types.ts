@@ -1,5 +1,5 @@
 import { Action } from 'redux';
-import { AuthActionTypes } from '../../actions/types';
+import { AuthActionTypes } from '../../actions';
 
 export interface AuthState {
   token?: string;

@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import { gql } from '@apollo/client';
-import { AuthActionTypes } from '../types';
+import { AuthActionTypes } from '..';
 import { apolloClient } from '../../config/apollo-client';
 
 export const registerUser = (
@@ -40,8 +40,7 @@ export const registerUser = (
         });
       },
     )
-    .catch((err) => {
-      console.error(err);
+    .catch(() => {
       dispatch({
         type: AuthActionTypes.REGISTER_FAIL,
       });
