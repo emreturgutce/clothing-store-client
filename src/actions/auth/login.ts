@@ -13,6 +13,9 @@ export const loginUser = (email: string, password: string) => (
           login(data: $data) {
             id
             email
+            detail {
+              name
+            }
           }
         }
       `,
@@ -26,13 +29,17 @@ export const loginUser = (email: string, password: string) => (
     .then(
       ({
         data: {
-          login: { id },
+          login: {
+            id,
+            detail: { name },
+          },
         },
       }) => {
         dispatch({
           type: AuthActionTypes.LOGIN_SUCCESS,
           payload: {
             id,
+            name,
           },
         });
       },

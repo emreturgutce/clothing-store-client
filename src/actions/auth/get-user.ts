@@ -17,6 +17,9 @@ export const getUser = () => (dispatch: Dispatch) => {
             me {
               id
               email
+              detail {
+                name
+              }
             }
           }
         `,
@@ -24,11 +27,17 @@ export const getUser = () => (dispatch: Dispatch) => {
       .then(
         ({
           data: {
-            me: { id },
+            me: {
+              id,
+              detail: { name },
+            },
           },
         }) => {
           setTimeout(() => {
-            dispatch({ type: AuthActionTypes.AUTH_SUCCESS, payload: { id } });
+            dispatch({
+              type: AuthActionTypes.AUTH_SUCCESS,
+              payload: { id, name },
+            });
             dispatch({ type: AuthActionTypes.USER_LOADED });
           }, 1000);
         },

@@ -16,6 +16,9 @@ export const registerUser = (
           register(data: $data) {
             id
             email
+            detail {
+              name
+            }
           }
         }
       `,
@@ -31,12 +34,15 @@ export const registerUser = (
     .then(
       ({
         data: {
-          register: { id },
+          register: {
+            id,
+            detail: { name },
+          },
         },
       }) => {
         dispatch({
           type: AuthActionTypes.REGISTER_SUCCESS,
-          payload: { id },
+          payload: { id, name },
         });
       },
     )
