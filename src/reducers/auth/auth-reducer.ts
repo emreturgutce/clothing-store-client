@@ -1,9 +1,7 @@
-import Cookies from 'js-cookie';
-import { AuthActionTypes } from '../../actions/types';
+import { AuthActionTypes } from '../../actions';
 import { AuthAction, AuthState } from './types';
 
 const initialState: AuthState = {
-  token: Cookies.get('auth_token'),
   isAuthenticated: false,
   isLoading: false,
   user: null,
@@ -25,6 +23,7 @@ export function authReducer(
         isAuthenticated: true,
         isLoading: false,
       };
+    case AuthActionTypes.AUTH_SUCCESS:
     case AuthActionTypes.LOGIN_SUCCESS:
     case AuthActionTypes.REGISTER_SUCCESS:
       return {
@@ -39,10 +38,8 @@ export function authReducer(
     case AuthActionTypes.LOGIN_FAIL:
     case AuthActionTypes.REGISTER_FAIL:
     case AuthActionTypes.LOGOUT_SUCCESS:
-      Cookies.remove('auth_token');
       return {
         ...state,
-        token: undefined,
         user: null,
         isAuthenticated: false,
         isLoading: false,
