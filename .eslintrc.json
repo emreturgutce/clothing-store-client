@@ -26,6 +26,10 @@
     "implicit-arrow-linebreak": "off",
     "function-paren-newline": "off",
     "import/prefer-default-export": "off",
-    "no-shadow": "off"
+    "no-shadow": "off",
+    "react/jsx-wrap-multilines": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/react-in-jsx-scope": "off",
+    "no-confusing-arrow": "off"
   }
 }
