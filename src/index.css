@@ -3,4 +3,10 @@ body {
   margin: 0;
   box-sizing: border-box;
   background-color: rgb(224, 224, 224);
+  height: 100vh;
+  overflow: hidden;
+}
+
+#app {
+  height: 100%;
 }
