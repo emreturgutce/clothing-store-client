@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Navbar = () => {
   const classes = useStyles();
-  const { isAuthenticated: isAuth, isLoading } = useSelector(
+  const { isAuthenticated: isAuth, isLoading, user } = useSelector(
     (state: any) => state.auth,
   );
 
@@ -42,7 +42,9 @@ const Navbar = () => {
     }
 
     if (isAuth) {
-      return <LetterAvatar firstLetter={'E'} />;
+      return (
+        <LetterAvatar firstLetter={user.name.toUpperCase().charAt(0) || 'U'} />
+      );
     }
 
     return (
