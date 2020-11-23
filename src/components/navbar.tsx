@@ -1,12 +1,15 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import HomeIcon from '@material-ui/icons/Home';
 import Container from '@material-ui/core/Container';
+import LetterAvatar from './letter-avatar';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -29,6 +32,25 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Navbar = () => {
   const classes = useStyles();
+  const { isAuthenticated: isAuth, isLoading } = useSelector(
+    (state: any) => state.auth,
+  );
+
+  const renderPhoto = () => {
+    if (isLoading) {
+      return <CircularProgress />;
+    }
+
+    if (isAuth) {
+      return <LetterAvatar firstLetter={'E'} />;
+    }
+
+    return (
+      <RouterLink to="/login">
+        <Button variant="contained">Login</Button>
+      </RouterLink>
+    );
+  };
 
   return (
     <div className={classes.root}>
@@ -45,9 +67,7 @@ const Navbar = () => {
                 <HomeIcon style={{ fill: '#EEE' }} width="125%" />
               </IconButton>
             </RouterLink>
-            <RouterLink to="/login">
-              <Button variant="contained">Login</Button>
-            </RouterLink>
+            {renderPhoto()}
           </Toolbar>
         </Container>
       </AppBar>
