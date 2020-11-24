@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink, useHistory, Redirect } from 'react-router-dom';
+import Helmet from 'react-helmet';
 import validator from 'validator';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -85,76 +86,81 @@ const Login: React.FC<{}> = () => {
   return (
     <>
       {!isAuth ? (
-        <Container component="main" maxWidth="xs">
-          <CssBaseline />
-          <div className={classes.paper}>
-            <Avatar className={classes.avatar}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign in
-            </Typography>
-            <form className={classes.form} noValidate onSubmit={onSubmit}>
-              {renderErrors()}
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                error={email !== '' && !validator.isEmail(email)}
-                autoFocus
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                error={
-                  password !== '' && !validator.isLength(password, { min: 6 })
-                }
-                autoComplete="current-password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                disabled={isLoading}
-                className={classes.submit}
-              >
-                Sign In
-              </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
+        <>
+          <Helmet>
+            <title>Clothing Store - Login</title>
+          </Helmet>
+          <Container component="main" maxWidth="xs">
+            <CssBaseline />
+            <div className={classes.paper}>
+              <Avatar className={classes.avatar}>
+                <LockOutlinedIcon />
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                Sign in
+              </Typography>
+              <form className={classes.form} noValidate onSubmit={onSubmit}>
+                {renderErrors()}
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  error={email !== '' && !validator.isEmail(email)}
+                  autoFocus
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  error={
+                    password !== '' && !validator.isLength(password, { min: 6 })
+                  }
+                  autoComplete="current-password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <FormControlLabel
+                  control={<Checkbox value="remember" color="primary" />}
+                  label="Remember me"
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  disabled={isLoading}
+                  className={classes.submit}
+                >
+                  Sign In
+                </Button>
+                <Grid container>
+                  <Grid item xs>
+                    <Link href="#" variant="body2">
+                      Forgot password?
+                    </Link>
+                  </Grid>
+                  <Grid item>
+                    <RouterLink to="/signup" id="sign-up-router-link">
+                      <span>Have an account?</span>
+                    </RouterLink>
+                  </Grid>
                 </Grid>
-                <Grid item>
-                  <RouterLink to="/signup" id="sign-up-router-link">
-                    <span>Have an account?</span>
-                  </RouterLink>
-                </Grid>
-              </Grid>
-            </form>
-          </div>
-        </Container>
+              </form>
+            </div>
+          </Container>
+        </>
       ) : (
         <Redirect to="/" />
       )}

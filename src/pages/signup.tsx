@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { Link as RouterLink, useHistory, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import Helmet from 'react-helmet';
 import validator from 'validator';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/material.css';
@@ -76,105 +77,110 @@ export default function SignUp() {
   return (
     <>
       {!isAuth ? (
-        <Container component="main" maxWidth="xs">
-          <CssBaseline />
-          <div className={classes.paper}>
-            <Avatar className={classes.avatar}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign up
-            </Typography>
-            <form className={classes.form} noValidate onSubmit={onSubmit}>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <TextField
-                    autoComplete="name"
-                    name="Name"
-                    variant="outlined"
-                    fullWidth
-                    id="Name"
-                    label="Name"
-                    autoFocus
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                  />
+        <>
+          <Helmet>
+            <title>Clothing Store - Signup</title>
+          </Helmet>
+          <Container component="main" maxWidth="xs">
+            <CssBaseline />
+            <div className={classes.paper}>
+              <Avatar className={classes.avatar}>
+                <LockOutlinedIcon />
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                Sign up
+              </Typography>
+              <form className={classes.form} noValidate onSubmit={onSubmit}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <TextField
+                      autoComplete="name"
+                      name="Name"
+                      variant="outlined"
+                      fullWidth
+                      id="Name"
+                      label="Name"
+                      autoFocus
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <PhoneInput
+                      country={'tr'}
+                      value={phone}
+                      onChange={(phone) => setPhone(phone)}
+                      inputProps={{
+                        name: 'phone',
+                      }}
+                      inputStyle={{
+                        width: '100%',
+                        backgroundColor: '#FAFAFA',
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="email"
+                      label="Email Address"
+                      name="email"
+                      error={email !== '' && !validator.isEmail(email)}
+                      autoComplete="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      name="password"
+                      label="Password"
+                      type="password"
+                      id="password"
+                      error={
+                        password !== '' &&
+                        !validator.isLength(password, { min: 6 })
+                      }
+                      autoComplete="current-password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox value="allowExtraEmails" color="primary" />
+                      }
+                      label="I want to receive inspiration, marketing promotions and updates via email."
+                    />
+                  </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                  <PhoneInput
-                    country={'tr'}
-                    value={phone}
-                    onChange={(phone) => setPhone(phone)}
-                    inputProps={{
-                      name: 'phone',
-                    }}
-                    inputStyle={{
-                      width: '100%',
-                      backgroundColor: '#FAFAFA',
-                    }}
-                  />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  disabled={isLoading}
+                  className={classes.submit}
+                >
+                  Sign Up
+                </Button>
+                <Grid container justify="flex-end">
+                  <Grid item>
+                    <RouterLink to="/login" id="login-router-link">
+                      <span>Already have an account? Sign in</span>
+                    </RouterLink>
+                  </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    error={email !== '' && !validator.isEmail(email)}
-                    autoComplete="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    error={
-                      password !== '' &&
-                      !validator.isLength(password, { min: 6 })
-                    }
-                    autoComplete="current-password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox value="allowExtraEmails" color="primary" />
-                    }
-                    label="I want to receive inspiration, marketing promotions and updates via email."
-                  />
-                </Grid>
-              </Grid>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                disabled={isLoading}
-                className={classes.submit}
-              >
-                Sign Up
-              </Button>
-              <Grid container justify="flex-end">
-                <Grid item>
-                  <RouterLink to="/login" id="login-router-link">
-                    <span>Already have an account? Sign in</span>
-                  </RouterLink>
-                </Grid>
-              </Grid>
-            </form>
-          </div>
-        </Container>
+              </form>
+            </div>
+          </Container>
+        </>
       ) : (
         <Redirect to="/" />
       )}
