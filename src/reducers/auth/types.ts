@@ -8,11 +8,13 @@ export interface AuthState {
     id?: string;
     name?: string;
   } | null;
+  errors: string[];
 }
 
 export interface AuthAction extends Action<AuthActionTypes> {
   payload?: {
     id?: string;
     name?: string;
+    error?: string;
   };
 }
