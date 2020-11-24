@@ -11,9 +11,7 @@ import PrivateRoute from './components/private-route';
 import { getUser, AuthActionTypes } from './actions';
 
 const App = () => {
-  const { isAuthenticated: isAuth, isLoading } = useSelector(
-    (state: any) => state.auth,
-  );
+  const { isLoading } = useSelector((state: any) => state.auth);
   const dispatch = useDispatch();
 
   const get = useCallback(() => dispatch(getUser()), [dispatch, getUser]);
@@ -45,12 +43,7 @@ const App = () => {
           <>
             <Container>
               <Switch>
-                <PrivateRoute
-                  exact
-                  path="/"
-                  isAuthenticated={isAuth}
-                  Children={Home}
-                />
+                <PrivateRoute exact path="/" Children={Home} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={SignUp} />
               </Switch>
