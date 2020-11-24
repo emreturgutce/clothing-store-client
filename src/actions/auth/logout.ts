@@ -13,7 +13,6 @@ export const logout = () => (dispatch: Dispatch) => {
       `,
     })
     .then((data) => {
-      console.log(data);
       dispatch({
         type: AuthActionTypes.LOGOUT_SUCCESS,
       });
