@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { Link as RouterLink, useHistory, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import validator from 'validator';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/material.css';
 import Avatar from '@material-ui/core/Avatar';
@@ -14,7 +15,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { registerUser } from '../actions';
+import { registerUser, AuthActionTypes } from '../actions';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -44,7 +45,9 @@ export default function SignUp() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
-  const isAuth = useSelector((state: any) => state.auth.isAuthenticated);
+  const { isAuthenticated: isAuth, isLoading } = useSelector(
+    (state: any) => state.auth,
+  );
 
   const register = useCallback(
     (firstName: string, lastName: string, email: string, password: string) =>
@@ -52,10 +55,22 @@ export default function SignUp() {
     [dispatch, registerUser],
   );
 
+  const userLoading = useCallback(
+    () => dispatch({ type: AuthActionTypes.USER_LOADING }),
+    [dispatch],
+  );
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    register(name, phone, email, password);
-    history.push('/');
+    if (
+      validator.isEmail(email) &&
+      validator.isLength(password, { min: 6 }) &&
+      validator.isMobilePhone(phone, ['tr-TR'])
+    ) {
+      userLoading();
+      register(name, phone, email, password);
+      history.push('/');
+    }
   };
 
   return (
@@ -74,13 +89,12 @@ export default function SignUp() {
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <TextField
-                    autoComplete="fname"
-                    name="firstName"
+                    autoComplete="name"
+                    name="Name"
                     variant="outlined"
-                    required
                     fullWidth
-                    id="firstName"
-                    label="First Name"
+                    id="Name"
+                    label="Name"
                     autoFocus
                     value={name}
                     onChange={(e) => setName(e.target.value)}
@@ -88,13 +102,11 @@ export default function SignUp() {
                 </Grid>
                 <Grid item xs={12}>
                   <PhoneInput
-                    country={'us'}
+                    country={'tr'}
                     value={phone}
                     onChange={(phone) => setPhone(phone)}
                     inputProps={{
                       name: 'phone',
-                      required: true,
-                      autoFocus: true,
                     }}
                     inputStyle={{
                       width: '100%',
@@ -110,6 +122,7 @@ export default function SignUp() {
                     id="email"
                     label="Email Address"
                     name="email"
+                    error={email !== '' && !validator.isEmail(email)}
                     autoComplete="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -124,6 +137,10 @@ export default function SignUp() {
                     label="Password"
                     type="password"
                     id="password"
+                    error={
+                      password !== '' &&
+                      !validator.isLength(password, { min: 6 })
+                    }
                     autoComplete="current-password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -143,6 +160,7 @@ export default function SignUp() {
                 fullWidth
                 variant="contained"
                 color="primary"
+                disabled={isLoading}
                 className={classes.submit}
               >
                 Sign Up
