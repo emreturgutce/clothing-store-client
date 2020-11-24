@@ -44,9 +44,12 @@ export const loginUser = (email: string, password: string) => (
         });
       },
     )
-    .catch(() => {
+    .catch((err: Error) => {
       dispatch({
         type: AuthActionTypes.LOGIN_FAIL,
+        payload: {
+          error: err.message,
+        },
       });
     });
 };
