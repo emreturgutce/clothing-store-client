@@ -1,10 +1,13 @@
 import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink, useHistory, Redirect } from 'react-router-dom';
+import validator from 'validator';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
+import { Alert, AlertTitle } from '@material-ui/lab';
+import Collapse from '@material-ui/core/Collapse';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
@@ -38,10 +41,13 @@ const useStyles = makeStyles((theme) => ({
 const Login: React.FC<{}> = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [closeError, setCloseError] = useState(true);
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
-  const isAuth = useSelector((state: any) => state.auth.isAuthenticated);
+  const { isAuthenticated: isAuth, errors } = useSelector(
+    (state: any) => state.auth,
+  );
 
   const login = useCallback(
     (email: string, password: string) => dispatch(loginUser(email, password)),
@@ -50,8 +56,24 @@ const Login: React.FC<{}> = () => {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    login(email, password);
-    history.push('/');
+    if (validator.isEmail(email) && validator.isLength(password, { min: 6 })) {
+      login(email, password);
+      history.push('/');
+    }
+  };
+
+  // eslint-disable-next-line consistent-return
+  const renderErrors = () => {
+    if (errors && errors.length > 0) {
+      return (
+        <Collapse in={closeError}>
+          <Alert severity="error" onClose={() => setCloseError(false)}>
+            <AlertTitle>Error</AlertTitle>
+            {errors.map((error: string) => error)}
+          </Alert>
+        </Collapse>
+      );
+    }
   };
 
   return (
@@ -67,6 +89,7 @@ const Login: React.FC<{}> = () => {
               Sign in
             </Typography>
             <form className={classes.form} noValidate onSubmit={onSubmit}>
+              {renderErrors()}
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -76,6 +99,7 @@ const Login: React.FC<{}> = () => {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                error={email !== '' && !validator.isEmail(email)}
                 autoFocus
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -89,6 +113,9 @@ const Login: React.FC<{}> = () => {
                 label="Password"
                 type="password"
                 id="password"
+                error={
+                  password !== '' && !validator.isLength(password, { min: 6 })
+                }
                 autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
