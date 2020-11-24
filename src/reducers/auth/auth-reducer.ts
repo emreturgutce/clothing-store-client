@@ -5,6 +5,7 @@ const initialState: AuthState = {
   isAuthenticated: false,
   isLoading: false,
   user: null,
+  errors: [],
 };
 
 export function authReducer(
@@ -44,6 +45,12 @@ export function authReducer(
         user: null,
         isAuthenticated: false,
         isLoading: false,
+        errors: action.payload?.error ? [action.payload?.error] : state.errors,
+      };
+    case AuthActionTypes.CLEAN_ERRORS:
+      return {
+        ...state,
+        errors: [],
       };
     default:
       return state;
