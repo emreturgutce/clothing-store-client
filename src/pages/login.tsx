@@ -16,7 +16,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { loginUser } from '../actions';
+import { AuthActionTypes, loginUser } from '../actions';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -45,7 +45,7 @@ const Login: React.FC<{}> = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
-  const { isAuthenticated: isAuth, errors } = useSelector(
+  const { isAuthenticated: isAuth, errors, isLoading } = useSelector(
     (state: any) => state.auth,
   );
 
@@ -54,9 +54,15 @@ const Login: React.FC<{}> = () => {
     [dispatch, loginUser],
   );
 
+  const userLoading = useCallback(
+    () => dispatch({ type: AuthActionTypes.USER_LOADING }),
+    [dispatch],
+  );
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (validator.isEmail(email) && validator.isLength(password, { min: 6 })) {
+      userLoading();
       login(email, password);
       history.push('/');
     }
@@ -129,6 +135,7 @@ const Login: React.FC<{}> = () => {
                 fullWidth
                 variant="contained"
                 color="primary"
+                disabled={isLoading}
                 className={classes.submit}
               >
                 Sign In
