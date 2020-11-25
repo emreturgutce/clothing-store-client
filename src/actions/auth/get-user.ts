@@ -10,6 +10,10 @@ export const getUser = () => (dispatch: Dispatch) => {
   if (!cookie) {
     dispatch({ type: AuthActionTypes.AUTH_FAIL });
   } else {
+    dispatch({
+      type: AuthActionTypes.USER_LOADING,
+    });
+
     apolloClient
       .query({
         query: gql`
