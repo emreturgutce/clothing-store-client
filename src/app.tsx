@@ -8,7 +8,7 @@ import Home from './pages/home';
 import Login from './pages/login';
 import SignUp from './pages/signup';
 import PrivateRoute from './components/private-route';
-import { getUser, AuthActionTypes } from './actions';
+import { getUser } from './actions';
 
 const App = () => {
   const { isLoading } = useSelector((state: any) => state.auth);
@@ -17,9 +17,6 @@ const App = () => {
   const get = useCallback(() => dispatch(getUser()), [dispatch, getUser]);
 
   useEffect(() => {
-    dispatch({
-      type: AuthActionTypes.USER_LOADING,
-    });
     get();
   }, []);
 
