@@ -10,3 +10,9 @@ export enum AuthActionTypes {
   AUTH_SUCCESS = 'AUTH?SUCCESS',
   CLEAN_ERRORS = 'CLEAN_ERRORS',
 }
+
+export enum ProductActionTypes {
+  LOADING = 'LOADING',
+  LOADING_FAILED = 'LOADING_FAILED',
+  LOADING_SUCCESS = 'LOADING_SUCCESS',
+}
