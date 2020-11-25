@@ -153,7 +153,7 @@ const Login: React.FC<{}> = () => {
                   </Grid>
                   <Grid item>
                     <RouterLink to="/signup" id="sign-up-router-link">
-                      <span>Have an account?</span>
+                      <span>Not have an account? Sign up</span>
                     </RouterLink>
                   </Grid>
                 </Grid>
