@@ -6,15 +6,11 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
 
 const useStyles = makeStyles(() =>
   createStyles({
     root: {
-      maxWidth: 345,
-    },
-    avatar: {
-      backgroundColor: red[500],
+      maxWidth: 330,
     },
   }),
 );
@@ -33,7 +29,7 @@ export default function RecipeReviewCard({
   return (
     <Card className={classes.root}>
       <RouterLink to={`products/${id}`}>
-        <CardHeader title="Shrimp and Chorizo Paella" />
+        <CardHeader title={name} />
       </RouterLink>
       <CardMedia
         image="/public/images/clothing-1.jpg"
