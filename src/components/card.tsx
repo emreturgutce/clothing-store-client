@@ -1,5 +1,6 @@
 import React from 'react';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { Link as RouterLink } from 'react-router-dom';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -21,15 +22,19 @@ const useStyles = makeStyles(() =>
 export default function RecipeReviewCard({
   name,
   price,
+  id,
 }: {
   name: string;
   price: string;
+  id: string;
 }) {
   const classes = useStyles();
 
   return (
     <Card className={classes.root}>
-      <CardHeader title="Shrimp and Chorizo Paella" />
+      <RouterLink to={`products/${id}`}>
+        <CardHeader title="Shrimp and Chorizo Paella" />
+      </RouterLink>
       <CardMedia
         image="/public/images/clothing-1.jpg"
         title={name}
