@@ -8,6 +8,7 @@ import Home from './pages/home';
 import Login from './pages/login';
 import SignUp from './pages/signup';
 import PrivateRoute from './components/private-route';
+import ProductDetail from './pages/product-detail';
 import { getUser } from './actions';
 
 const App = () => {
@@ -43,6 +44,11 @@ const App = () => {
                 <PrivateRoute exact path="/" Children={Home} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={SignUp} />
+                <PrivateRoute
+                  exact
+                  path="/products/:id"
+                  Children={ProductDetail}
+                />
               </Switch>
             </Container>
           </>
