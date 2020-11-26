@@ -4,7 +4,9 @@ import Cookies from 'js-cookie';
 import { AuthActionTypes, ProductActionTypes } from '..';
 import { apolloClient } from '../../config/apollo-client';
 
-export const getAllProducts = () => (dispatch: Dispatch) => {
+export const getAllProducts = (take: number, skip: number) => (
+  dispatch: Dispatch,
+) => {
   const cookie = Cookies.get('auth_token');
 
   if (!cookie) {
@@ -30,8 +32,8 @@ export const getAllProducts = () => (dispatch: Dispatch) => {
         `,
         variables: {
           data: {
-            take: 5,
-            skip: 0,
+            take,
+            skip,
           },
         },
       })
