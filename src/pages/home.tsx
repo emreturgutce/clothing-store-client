@@ -18,13 +18,13 @@ const Home = () => {
     (state: any) => state.product,
   );
 
-  const getAll = useCallback(() => dispatch(getAllProducts()), [
-    dispatch,
-    getAllProducts,
-  ]);
+  const getAll = useCallback(
+    (take: number, skip: number) => dispatch(getAllProducts(take, skip)),
+    [dispatch, getAllProducts],
+  );
 
   useEffect(() => {
-    getAll();
+    getAll(10, 0);
   }, []);
 
   return (
@@ -64,6 +64,7 @@ const Home = () => {
                   <Grid key={product.id} item>
                     <Card
                       key={product.id}
+                      id={product.id}
                       name={product.name}
                       price={product.price}
                     />
