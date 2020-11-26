@@ -59,9 +59,9 @@ const Home = () => {
             <p>Loading</p>
           ) : (
             <Box py={3}>
-              <Grid container justify="space-between" spacing={4}>
+              <Grid container spacing={4}>
                 {products.map((product: any) => (
-                  <Grid key={product.id} item>
+                  <Grid key={product.id} item lg={3}>
                     <Card
                       key={product.id}
                       id={product.id}
