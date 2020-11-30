@@ -61,7 +61,7 @@ const Home = () => {
             <Box py={3}>
               <Grid container spacing={4}>
                 {products.map((product: any) => (
-                  <Grid key={product.id} item lg={3}>
+                  <Grid key={product.id} item lg={4} xs={12} md={6}>
                     <Card
                       key={product.id}
                       id={product.id}
